@@ -1,15 +1,21 @@
 \babel@toc {italian}{}\relax 
 \babel@toc {italian}{}\relax 
 \babel@toc {italian}{}\relax 
-\contentsline {chapter}{Elenco delle tabelle}{7}{section*.1}%
-\contentsline {chapter}{Elenco delle figure}{8}{section*.2}%
-\contentsline {part}{\EnsureStandardFontEncoding {I}\hspace {1em}Prima Parte}{11}{part.1}%
-\contentsline {chapter}{\numberline {1}Introduzione generale}{13}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Principi generali}{13}{section.1.1}%
-\contentsline {chapter}{\numberline {2}Il barometro}{15}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Generalit\`a}{15}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Forma del barometro}{15}{subsection.2.1.1}%
-\contentsline {section}{\numberline {2.2}Del mercurio}{16}{section.2.2}%
-\contentsline {part}{\EnsureStandardFontEncoding {II}\hspace {1em}Seconda Parte}{19}{part.2}%
-\contentsline {chapter}{\numberline {3}Primo capitolo della seconda parte}{21}{chapter.3}%
-\contentsline {section}{\numberline {3.1}How to}{21}{section.3.1}%
+\contentsline {chapter}{Elenco delle tabelle}{5}{section*.1}%
+\contentsline {chapter}{Elenco delle figure}{6}{section*.2}%
+\contentsline {part}{\EnsureStandardFontEncoding {I}\hspace {1em}Fondamenti delle Copule}{7}{part.1}%
+\contentsline {chapter}{\numberline {1}Introduzione}{9}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Definizione e motivazione dello studio}{9}{section.1.1}%
+\contentsline {chapter}{\numberline {2}Fondamenti Matematici delle Copule}{11}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Definizione di copula e Teorema di Sklar}{11}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Definizione di Copula}{11}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Teorema di Sklar}{12}{subsection.2.1.2}%
+\contentsline {subsubsection}{Conseguenze del Teorema di Sklar}{12}{section*.3}%
+\contentsline {section}{\numberline {2.2}Famiglie principali di copule (Gaussiane, t-Student, Archimedee) }{12}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Famiglie di copule}{12}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Proprietà delle copule}{13}{subsection.2.2.2}%
+\contentsline {part}{\EnsureStandardFontEncoding {II}\hspace {1em}Applicazioni Finanziarie delle Copule}{15}{part.2}%
+\contentsline {chapter}{\numberline {3}Copule e Gestione del Rischio Finanziario}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Superamento della correlazione lineare nelle distribuzioni non normali}{17}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Dipendenza di coda e impatti su Value-at-Risk (VaR) e Expected Shortfall}{17}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Pricing di derivati multivariati con copule}{17}{section.3.3}%

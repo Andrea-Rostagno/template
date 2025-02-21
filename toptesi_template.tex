@@ -13,6 +13,11 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{enumitem}
+
 \usepackage{hyperref}
 \hypersetup{%
     pdfpagemode={UseOutlines},
@@ -34,7 +39,7 @@
 \usepackage{dcolumn}
 \newcolumntype{d}{D{.}{.}{-1} } %to vetical align numbers in tables, along the decimal dot
 
-\usepackage{amsmath}
+%\usepackage{amsmath}
 
 \usepackage{natbib} % for the bibliography
 \bibliographystyle{plainnat}
@@ -59,24 +64,24 @@
 \input{./title.tex} %the frontispiece
 
 %%%%%%% Dedication
-\ifclassica%
-{\begin{dedica}
-    A mio padre
+%\ifclassica%
+%{\begin{dedica}
+    %A mio padre
 
-    \textdagger\ A mio nonno Pino
-\end{dedica}
+    %\textdagger\ A mio nonno Pino
+%\end{dedica}
 %%%%%%% 
 
 \sommario%summary
 %Here goes the abstrat of your thesis
-La pressione barometrica di Giove viene misurata mediante un metodo originale  messo a punto dai candidati, che si basa sul rilevamento telescopico della pressione.
+Questa tesi esplora il ruolo delle copule nella modellazione della dipendenza tra variabili casuali, con particolare attenzione alle applicazioni in finanza. Dopo un'introduzione ai concetti fondamentali delle copule e alla loro teoria matematica, vengono analizzate diverse famiglie di copule, le loro proprietà e il loro utilizzo nella gestione del rischio finanziario. Successivamente, si discutono i metodi di stima dei parametri delle copule, con un focus su metodi classici e bayesiani, e si presenta un’implementazione pratica sui dati finanziari del DAX. Infine, vengono confrontati i risultati ottenuti con diverse copule e si discutono le implicazioni per la gestione del rischio e l’ottimizzazione di portafoglio.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ringraziamenti%acknowledgements
 %Acknowledge the people you love and/or work with
-I candidati ringraziano vivamente il Granduca di Toscana per i mezzi messi loro a disposizione, ed il signor Von Braun, assistente del prof.~Albert Einstein, per le informazioni riservate che egli ha gentilmente fornito loro, e per le utili discussioni che hanno permesso ai candidati di evitare di riscoprire l'acqua calda.
+Da scrivere
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -92,143 +97,146 @@ I candidati ringraziano vivamente il Granduca di Toscana per i mezzi messi loro 
 
 %Citation
 %If you feel like a poetic guy!
-\ifclassica   
-\begin{citazioni}
-    \textit{If you cannot understand my\\argument, and declare}\\
-    it's Greek to me\\
-    \textit{you are quoting Shakespeare.}
+%\ifclassica   
+%\begin{citazioni}
+ %   \textit{If you cannot understand my\\argument, and declare}\\
+  %  it's Greek to me\\
+   % \textit{you are quoting Shakespeare.}
     
-    [\textsc{B. Levin}, Quoting Shakespeare]\vspace{1em}
-\end{citazioni}
-\fi
+    %[\textsc{B. Levin}, Quoting Shakespeare]\vspace{1em}
+%\end{citazioni}
+%\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \mainmatter
 
-\part{Prima Parte}
+\part{Fondamenti delle Copule}
 
-\chapter{Introduzione generale}
+\chapter{Introduzione}
 
-\section{Principi generali}
-Il problema della determinazione della pressione barometrica dell'atmosfera di Giove non ha ricevuto finora una soluzione soddisfacente, per l'elementare motivo che il pianeta suddetto si trova ad una distanza tale che i mezzi attuali non consentono di eseguire una misura diretta.
+\section{Definizione e motivazione dello studio}
+Le copule sono strumenti matematici che permettono di modellare e stimare la dipendenza tra diverse variabili casuali. Sono particolarmente utili in finanza, dove la dipendenza tra i rendimenti degli asset, i tassi di interesse e i tempi di default sono fattori cruciali per la valutazione del rischio e la determinazione del prezzo di strumenti finanziari complessi. L’importanza delle copule risiede nella loro capacità di separare la modellazione delle distribuzioni marginali delle singole variabili dalla modellazione della loro struttura di dipendenza.
 
-Conoscendo per\`o con grande precisione le orbite dei satelliti principali di Giove, e segnatamente le orbite dei satelliti medicei, \`e possibile eseguire delle misure indirette, che fanno ricorso alla nota formula \cite{gal}:
-\begin{equation} \label{eq:eq1}
-\Phi = K\frac{\Xi^2 +\Psi_\mathrm{max}}{1+\gei\Omega}\ .
-\end{equation}
+In altre parole, invece di dover specificare una funzione di distribuzione congiunta per tutte le variabili, è possibile utilizzare una copula per combinare le distribuzioni marginali di ciascuna variabile in una distribuzione congiunta che rifletta la dipendenza desiderata. Questo approccio offre grande flessibilità nella modellazione, poiché consente di scegliere le distribuzioni marginali e la copula in modo indipendente, a seconda delle caratteristiche specifiche dei dati e del problema in esame.
 
-In \eqref{eq:eq1} le varie grandezze hanno i seguenti significati:
+Ad esempio, si potrebbe utilizzare una distribuzione t di Student per modellare i rendimenti degli indici azionari, che spesso presentano code più spesse rispetto alla distribuzione normale, e quindi utilizzare una copula di Gumbel per rappresentare la dipendenza asimmetrica tra i mercati, con una maggiore probabilità di movimenti congiunti al rialzo rispetto a quelli al ribasso.
+
+La teoria delle copule si basa sul teorema di Sklar, che afferma che ogni funzione di distribuzione congiunta può essere espressa in termini di una copula e delle distribuzioni marginali delle variabili. Il teorema di Sklar garantisce l’esistenza e l’unicità della copula nel caso di variabili casuali continue. 
+
+Esistono diverse famiglie di copule, ciascuna con proprietà specifiche in termini di dipendenza di coda, simmetria e altre caratteristiche. Alcune delle famiglie di copule più utilizzate in finanza includono la copula gaussiana, la copula t di Student, le copule Archimedee (come la copula di Gumbel, la copula di Clayton e la copula di Frank) e la copula di Marshall-Olkin. La scelta della copula più adatta dipende dalla natura del problema e dalle caratteristiche della dipendenza che si desidera modellare.
+
+Ad esempio, la
+copula t di Student é spesso preferita alla copula gaussiana quando si vogliono
+modellare dipendenze di coda più
+elevate, mentre le copule Archimedee consentono di modellare diversi tipi di dipendenza asimmetrica.
+
+Le copule trovano applicazione in diversi ambiti della finanza, tra cui:
+
+\begin{itemize}
+	\item \textbf{Pricing di opzioni multivariate e altri derivati}: le copule possono essere utilizzate per modellare la dipendenza tra i sottostanti di un’opzione basket, un’opzione rainbow o altri derivati multi-asset, consentendo una valutazione più accurata del prezzo di questi strumenti.
+	
+	\item \textbf{Gestione del rischio}: le copule sono ampiamente utilizzate nella modellazione del rischio di credito, dove consentono di stimare la probabilità di default congiunta di diverse attività o controparti. Le copule sono anche utilizzate nella stima del Value at Risk (VaR) di portafogli contenenti attività con distribuzioni non normali e dipendenze complesse.
+	
+	\item \textbf{Calibrazione e simulazione}: la flessibilità delle copule consente di calibrare i modelli ai dati di mercato in modo efficiente e di simulare scenari di mercato realistici che tengano conto della dipendenza tra le variabili.
+\end{itemize}
+
+In sintesi, le copule rappresentano uno strumento matematico versatile e potente per la modellazione della dipendenza in finanza, con un ampio spettro di applicazioni pratiche nella valutazione del rischio, nel pricing di derivati e nella gestione del portafogli.
+
+
+\chapter{Fondamenti Matematici delle Copule}
+
+\section{Definizione di copula e Teorema di Sklar}
+
+Le copule sono strumenti matematici che permettono di modellare e rappresentare la dipendenza tra variabili casuali. A differenza di misure di dipendenza tradizionali come la correlazione lineare, le copule catturano la dipendenza in modo più completo, includendo la dipendenza nelle code delle distribuzioni e non limitandosi a relazioni lineari.
+
+Ecco una spiegazione delle formule e delle proprietà chiave:
+
+\subsection{Definizione di Copula}
+Una \(d\)-copula è una funzione \( C : [0,1]^d \to [0,1] \), dove \( d \geq 2 \) (numero di variabili; nelle proprietà seguenti consideriamo le copule bivariate), che soddisfa le seguenti proprietà:
+
 \begin{enumerate}
-\item $\Phi$ angolo di rivoluzione del satellite in radianti se $K=1$, in gradi se $K=180/\pi$;
-\item $\Xi$ eccentricit\`a dell'orbita del satellite; questa \`e una grandezza priva di dimensioni;
-\item $\Psi_\mathrm{max}$ rapporto fra il semiasse maggiore ed il semiasse minore dell'orbita del satellite, nelle condizioni di massima eccentricit\`a;
-\item $\Omega$ velocit\`a istantanea di rotazione; 
+	\item \textbf{Groundedness:}  
+	\[
+	C(u,0) = C(0,v) = 0, \quad \forall u, v \in [0,1]^2
+	\]
+	Ciò significa che la copula è zero se una delle variabili è zero.
+	
+	\item \textbf{Marginalità:}  
+	\[
+	C(u,1) = u, \quad C(1,v) = v, \quad \forall u, v \in [0,1]^2
+	\]
+	Questa proprietà assicura che la copula sia coerente con le distribuzioni marginali, ovvero che quando una delle variabili assume il suo valore massimo, la copula coincida con la funzione di ripartizione dell’altra variabile.
+	
+	\item \textbf{2-crescita (o 2-increasing):}  
+	\[
+	C(u_2,v_2) - C(u_2,v_1) - C(u_1,v_2) + C(u_1,v_1) \geq 0, \quad \forall u_1 \leq u_2, v_1 \leq v_2 \in [0,1]^2
+	\]
+	Questa proprietà assicura che la copula sia non decrescente in entrambe le variabili, il che è necessario affinché la copula rappresenti una dipendenza positiva o negativa tra le variabili.
 \end{enumerate}
 
-Le grandezze in gioco sono evidenziate nella Figura \ref{fig:figura}.
-\begin{figure}[htb]\centering
-\includegraphics[scale=0.1]{Pictures/FlameArtwork2}
-\caption{Come includere una figura, salvata nella cartella immagini.}\label{fig:figura}
-\end{figure}
+\subsection{Teorema di Sklar}
+Questo teorema, centrale nella teoria delle copule, stabilisce un legame tra le copule e le funzioni di distribuzione congiunta.  
+
+In breve, il teorema afferma che:  
+Data una funzione di distribuzione congiunta \( F(x,y) \) con marginali \( F_1(x) \) e \( F_2(y) \), esiste una copula \( C \) tale che:
+\[
+F(x,y) = C(F_1(x), F_2(y))
+\]
+Inoltre, se \( F_1(x) \) e \( F_2(y) \) sono continue, allora la copula \( C \) è unica.
+
+\subsubsection{Conseguenze del Teorema di Sklar}
+\begin{itemize}
+	\item \textbf{Costruzione di modelli di dipendenza:}  
+	Permette di costruire una funzione di distribuzione congiunta a partire da distribuzioni marginali arbitrarie e da una copula che ne modella la dipendenza. Questa proprietà è particolarmente utile per modellare dati reali, dove spesso si conoscono le distribuzioni marginali ma non la struttura di dipendenza.
+	
+	\item \textbf{Separazione tra marginali e dipendenza:}  
+	Mette in luce come la struttura di dipendenza tra le variabili sia completamente catturata dalla copula, indipendentemente dalle distribuzioni marginali.
+\end{itemize}
+
+
+\section{Famiglie principali di copule (Gaussiane, t-Student, Archimedee) }
+
+\subsection{Famiglie di copule}
+Esistono diverse famiglie di copule, classificate in base alla loro struttura o ai metodi utilizzati per la loro costruzione. Di seguito, vengono elencate alcune delle principali famiglie:
+
+\begin{itemize}
+	\item \textbf{Fréchet-Hoeffding:} Questa famiglia include le copule che rappresentano i limiti inferiore (\(W\)) e superiore (\(M\)) della dipendenza tra due variabili casuali. La copula \(W\) rappresenta la perfetta dipendenza negativa, mentre la copula \(M\) rappresenta la perfetta dipendenza positiva.
+	
+	\item \textbf{Cuadras-Augé:} Questa famiglia di copule è costruita come una media geometrica ponderata delle copule \(M\) e \(P\), dove \(P\) rappresenta l’indipendenza tra le variabili.
+	
+	\item \textbf{Marshall-Olkin:} Questa famiglia di copule è spesso utilizzata per modellare la dipendenza tra variabili casuali che rappresentano tempi di vita.
+	
+	\item \textbf{Archimedee:} Queste copule sono generate da una funzione detta "generatore". Le copule Archimedee sono popolari per la loro flessibilità e la relativa facilità di utilizzo.
+\end{itemize}
+
+\subsection{Proprietà delle copule}
+Le copule possiedono diverse proprietà che le rendono utili per la modellazione della dipendenza. Alcune di queste proprietà sono:
+
+\begin{itemize}
+	\item \textbf{Invarianza rispetto a trasformazioni monotone crescenti:}  
+	Le copule sono invarianti rispetto a trasformazioni strettamente crescenti delle variabili marginali.
+	
+	\item \textbf{Misure di concordanza:}  
+	Diverse misure di concordanza come la rho di Spearman e la tau di Kendall possono essere espresse in termini di copule.
+	
+	\item \textbf{Dipendenza di coda:}  
+	Le copule possono catturare la dipendenza tra le code delle distribuzioni marginali, ovvero la tendenza delle variabili ad assumere valori estremi congiuntamente.
+\end{itemize}
+
+Possiamo quindi affermare che le copule offrono un approccio potente e flessibile per la modellazione della dipendenza tra variabili casuali. La loro capacità di separare la struttura di dipendenza dalle distribuzioni marginali, la loro invarianza rispetto a trasformazioni monotone crescenti e la loro capacità di catturare la dipendenza di coda le rendono strumenti preziosi in molte applicazioni pratiche.
 
 
 
 
-\chapter{Il barometro}
-\section{Generalit\`a}
-In questa sezione proviamo a modificare l'INTERLINEA.\\
+\part{Applicazioni Finanziarie delle Copule}
 
-\begin{interlinea}{0.87}
-Il barometro, come dice il nome, serve per misurare la pesantezza; pi\`u precisamente la pesantezza dell'aria riferita all'unit\`a di superficie.
-\end{interlinea}
+\chapter{Copule e Gestione del Rischio Finanziario}
 
-\begin{interlinea}{2}
-Studiando il fenomeno fisico si pu\`o concludere che in un dato punto grava il peso della colonna d'aria che lo sovrasta, e che tale colonna \`e tanto pi\`u grave quanto maggiore \`e la superficie della sua base; il rapporto fra il peso e la base della colonna si chiama pressione e si misura in once toscane al cubito quadrato, \cite{tor1}; nel Ducato di Savoia la misura in once al piede quadrato \`e quasi uguale, perch\'e col\`a usano un piede molto grande, che \`e simile al nostro cubito.
-\end{interlinea}
-
-\subsection{Forma del barometro}
-Il barometro consta di un tubo di vetro chiuso ad una estremit\`a e ripieno di mercurio, capovolto su di un vaso anch'esso ripieno di mercurio; mediante un'asta graduata si pu\`o misurare la distanza fra il menisco del mercurio dentro il tubo e la superficie del mercurio dentro il vaso; tale distanza \`e normalmente di 10 pollici toscani, \cite{tor1,tor2}, ma la misura pu\`o variare se si usano dei pollici diversi; \`e noto infatti che gl'huomini sogliono avere mani di diverse grandezze, talch\'e anche li pollici non sono egualmente lunghi.
-
-\section{Del mercurio}
-Il mercurio \`e un a sostanza che si presenta come un liquido, ma ha il colore del metallo. Esso \`e pesantissimo, tanto che un bicchiere, che se fosse pieno d'acqua, sarebbe assai leggiero, quando invece fosse ripieno di mercurio, sarebbe tanto pesante che con entrambe le mani esso necessiterebbe di essere levato in suso.
-
-
-\setcounter{footnote}{25}
-
-Il Monte Amiata, che \`e locato nel territorio del Ducato%
-\footnote{Naturalmente stiamo parlando del Granducato di Toscana.%
-\ifclassica\NoteWhiteLine\fi
-} del nostro Eccellentissimo et Illustrissimo Signore Granduca di Toscana\footnote{Cosimo IV de' Medici.}, \`e uno dei luoghi della terra dove pu\`o rinvenirsi in gran copia un sale rosso, che nomasi \emph{cinabro}, dal quale con artifizi alchemici, si estrae il mercurio nella forma e nella consistenza che occorre per la costruzione del barometro terrestre%
-\ifclassica
-\nota{Nota senza numero\dots
-
-\dots e che va a capo.
-}\fi.
-
-La densit\`a del mercurio \`e molto alta e varia con la temperatura come pu\`o desumersi dalla tabella \ref{t:1}.
-
-\begin{table}[htp]              
-\centering                      
-\begin{tabular}%                
-{r c l p{5cm}}                  % parametri di incolonnamento: r (a destra), c (al centro), l (a sinistra),
-								% p (per definire la larghezza della colonna)
-\hline\hline
-Colonna 1 & Colonna 2 & Colonna 3 & Colonna 4 \\  
-\hline
-\hspace*{1.3em}
-  & 10  & 100 & 13,8  \\
-2 & 20  &     & 13,6  \\
-  & 30  & 300 & 13,5  \\
-4 & 40  &     & 13,3  \\
-\hline \hline
-\end{tabular}
-\caption[Descrizione breve: compare nell'elenco tabelle]{Descrizione completa: didascalia della tabella.} \label{t:1}  
-%[Short description for the content list.]{Complete descreption: caption of the table.}
-\end{table}
-
-
-
-\begin{table}[htp]              
-\centering                      
-\begin{tabular}{d d}                        
-\hline\hline                    
-\multicolumn{1}{c}{Temperatura} & \multicolumn{1}{c}{Densit\`a}  \\  
-\multicolumn{1}{c}{\unit{\gradi C}} & \multicolumn{1}{c}{$\unit{t/m^3}$}  \\
-\hline%                        
-\hspace*{1.3em}
-0 & 13.8 \\   
-10 & 13.6 \\   
-50 & 13.5 \\   
-100 & 13.3 \\   
-\hline \hline
-\end{tabular}
-\caption[Densit\`a del mercurio]{Densit\`a del mercurio. Si pu\`o fare molto meglio usando il pacchetto \textsf{booktabs}.} \label{t:2}  % didascalia con label
-\end{table}
-
-
-\begin{osservazione}\normalfont
-Questa propriet\`a si manifesta quando esso \`e estremamente freddo, come quando lo si immerge nella salamoia di sale e ghiaccio che usano li maestri siciliani per confetionare li sorbetti, dei quali sono insuperabili artisti.
-\end{osservazione}
-%
-\begin{observation}\normalfont
-This is the English version of \emph{Osservazione}.
-\end{observation}
-
-Per nostra fortuna, questo grande freddo, che necessita per la confetione de li sorbetti, molto raramente, se non mai, viene a formarsi nelle terre del Granduca Eccellentissimo, sicch\'e non vi ha tema che il barometro di mercurio possa essere ruinato dal grande gelo e non indichi la pressione giusta, come invece deve sempre fare uno strumento di misura, quale \`e quello che \`e descritto cost\`i \cite{duane1964}.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%This example is to show how to include .tex files
-
-
-\part{Seconda Parte}
-\input{./Part_II/chapter1_part2.tex}
-
-
+\section{Superamento della correlazione lineare nelle distribuzioni non normali}
+\section{Dipendenza di coda e impatti su Value-at-Risk (VaR) e Expected Shortfall}
+\section{Pricing di derivati multivariati con copule}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
