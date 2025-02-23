@@ -1,8 +1,6 @@
 \babel@toc {italian}{}\relax 
 \babel@toc {italian}{}\relax 
 \babel@toc {italian}{}\relax 
-\contentsline {chapter}{Elenco delle tabelle}{5}{section*.1}%
-\contentsline {chapter}{Elenco delle figure}{6}{section*.2}%
 \contentsline {part}{\EnsureStandardFontEncoding {I}\hspace {1em}Fondamenti delle Copule}{7}{part.1}%
 \contentsline {chapter}{\numberline {1}Introduzione}{9}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Definizione e motivazione dello studio}{9}{section.1.1}%
@@ -10,12 +8,65 @@
 \contentsline {section}{\numberline {2.1}Definizione di copula e Teorema di Sklar}{11}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Definizione di Copula}{11}{subsection.2.1.1}%
 \contentsline {subsection}{\numberline {2.1.2}Teorema di Sklar}{12}{subsection.2.1.2}%
-\contentsline {subsubsection}{Conseguenze del Teorema di Sklar}{12}{section*.3}%
+\contentsline {subsubsection}{Conseguenze del Teorema di Sklar}{12}{section*.1}%
 \contentsline {section}{\numberline {2.2}Famiglie principali di copule (Gaussiane, t-Student, Archimedee) }{12}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Famiglie di copule}{12}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}Proprietà delle copule}{13}{subsection.2.2.2}%
 \contentsline {part}{\EnsureStandardFontEncoding {II}\hspace {1em}Applicazioni Finanziarie delle Copule}{15}{part.2}%
 \contentsline {chapter}{\numberline {3}Copule e Gestione del Rischio Finanziario}{17}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Superamento della correlazione lineare nelle distribuzioni non normali}{17}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Dipendenza di coda e impatti su Value-at-Risk (VaR) e Expected Shortfall}{17}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Pricing di derivati multivariati con copule}{17}{section.3.3}%
+\contentsline {subsection}{\numberline {3.1.1}Coefficiente di Pearson}{17}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Vantaggi delle Copule rispetto alla Correlazione Lineare}{18}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Dipendenza di coda e impatti su Value-at-Risk (VaR) e Expected Shortfall}{19}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Tipi di dipendenza di coda}{19}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Importanza nel VaR e nell’Expected Shortfall}{20}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Pricing di derivati multivariati con copule e gestione del rischio}{21}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Tariffare le opzioni}{21}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Gestione dei rischi}{21}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Modelli di copula}{22}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Tipi di modelli di copula}{22}{subsection.3.4.1}%
+\contentsline {part}{\EnsureStandardFontEncoding {III}\hspace {1em}Preparazione dei Dati e Assunzioni}{25}{part.3}%
+\contentsline {chapter}{\numberline {4}Preparazione dei Dati per la Modellazione con Copule}{27}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Struttura e caratteristiche dei dati}{27}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Pulizia e preprocessing}{28}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Trasformazione dei dati}{29}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Normalizzazione}{30}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Assunzioni nei modelli di copula}{30}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Distribuzione dei rendimenti}{31}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Assunzioni generali}{32}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}Conclusione sulle assunzioni}{33}{subsection.4.7.1}%
+\contentsline {part}{\EnsureStandardFontEncoding {IV}\hspace {1em}Stima dei Parametri delle Copule e Implementazione Pratica}{35}{part.4}%
+\contentsline {chapter}{\numberline {5}Stime dei parametri}{37}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Introduzione alla Stima dei Parametri delle Copule}{37}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Metodi di stima dei parametri}{38}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Stima di Massima Verosimiglianza (MLE)}{38}{subsection.5.2.1}%
+\contentsline {subsubsection}{Vantaggi del MLE:}{39}{section*.2}%
+\contentsline {subsubsection}{Limitazioni del MLE:}{40}{section*.3}%
+\contentsline {subsubsection}{Considerazioni finali}{40}{section*.4}%
+\contentsline {subsubsection}{Implementazione Python:}{40}{section*.5}%
+\contentsline {subsection}{\numberline {5.2.2}Metodo dei Momenti}{41}{subsection.5.2.2}%
+\contentsline {subsubsection}{Applicazione alle copule}{41}{section*.6}%
+\contentsline {subsubsection}{Ambiti di Applicazione}{41}{section*.7}%
+\contentsline {subsubsection}{Vantaggi e Svantaggi}{41}{section*.8}%
+\contentsline {paragraph}{Vantaggi}{41}{section*.9}%
+\contentsline {paragraph}{Svantaggi}{42}{section*.10}%
+\contentsline {subsubsection}{Limiti in contesti multivariati}{42}{section*.11}%
+\contentsline {subsection}{\numberline {5.2.3}Il Tau di Kendall}{43}{subsection.5.2.3}%
+\contentsline {subsubsection}{Principio di base}{43}{section*.12}%
+\contentsline {subsubsection}{Formula del Kendall’s Tau}{43}{section*.13}%
+\contentsline {paragraph}{Valori di \( \tau \):}{43}{section*.14}%
+\contentsline {subsubsection}{Differenza con il Coefficiente di Correlazione di Spearman}{44}{section*.15}%
+\contentsline {subsection}{\numberline {5.2.4}Esempio Numerico}{44}{subsection.5.2.4}%
+\contentsline {subsubsection}{Passaggi Principali}{44}{section*.16}%
+\contentsline {paragraph}{1. Definizione della Copula di Gumbel}{44}{section*.17}%
+\contentsline {paragraph}{2. Relazione con il Coefficiente di Kendall (\( \tau \))}{44}{section*.18}%
+\contentsline {subsubsection}{Esempio con Dati Simulati}{44}{section*.19}%
+\contentsline {paragraph}{1. Calcolo del Coefficiente di Kendall (\( \tau \))}{45}{section*.20}%
+\contentsline {paragraph}{2. Stima del parametro \( \theta \)}{45}{section*.21}%
+\contentsline {subsubsection}{Codice dax}{45}{section*.22}%
+\contentsline {subsection}{\numberline {5.2.5}Stima Bayesiana}{45}{subsection.5.2.5}%
+\contentsline {subsubsection}{Teorema di Bayes}{45}{section*.23}%
+\contentsline {subsubsection}{Vantaggi Generali della Stima Bayesiana}{46}{section*.24}%
+\contentsline {subsubsection}{Vantaggi Specifici nei Contesti con Copule}{47}{section*.25}%
+\contentsline {subsubsection}{Applicazioni Specifiche}{47}{section*.26}%
+\contentsline {subsubsection}{Python}{48}{section*.27}%
