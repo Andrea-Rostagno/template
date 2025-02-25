@@ -16,7 +16,22 @@
 \usepackage{graphicx}
 \usepackage{verbatim}
 \usepackage{amsmath}
+\usepackage{amssymb} 
+\usepackage{mathtools} 
 \usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+
+\usepackage{pifont}
+\usepackage{fontawesome}
+\usepackage[utf8]{inputenc}  % Supporto per caratteri UTF-8
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{listings}
+
+\definecolor{green}{RGB}{34,139,34}
+\definecolor{red}{RGB}{220,20,60}
+\definecolor{blue}{RGB}{30,144,255}
 
 \usepackage{hyperref}
 \hypersetup{%
@@ -42,7 +57,6 @@
 %\usepackage{amsmath}
 
 \usepackage{natbib} % for the bibliography
-\bibliographystyle{plainnat}
 
 
 %%%%%%% Local definitions
@@ -388,23 +402,46 @@ In particolare, nella gestione del rischio di credito, le copule vengono utilizz
 
 Il seguente dataset contiene dati storici sul DAX, che rappresentano prezzi o indici di mercato rilevanti. La raccolta dati fornisce i valori di Open, High, Low, Close partendo dal giorno 02/01/2020 ore 01:15:00 e terminando con il giorno 03/03/2022 ore 09:14:00. La raccolta e la gestione adeguata di tali dati sono fondamentali per analizzare le dipendenze tra strumenti finanziari tramite modelli di copula. Tramite questi dati calcoleremo i rendimenti giornalieri, un passaggio necessario per la modellazione delle dipendenze.
 
-\begin{figure}[h]
+\begin{table}[h]
 	\centering
-	\includegraphics[width=0.6\textwidth]{./Pictures/dfDax.png}
-	\caption{Inizio e fine del dataset}
-	\label{fig:dataset}
-\end{figure}
+	\renewcommand{\arraystretch}{1.2} % Spaziatura tra righe
+	\setlength{\tabcolsep}{6pt} % Spaziatura tra colonne
+	\small % Riduci leggermente la dimensione del testo per adattare meglio la tabella
+	\begin{tabular}{lcccc} % Colonne: l (sinistra), c (centrate)
+		\toprule
+		\textbf{DateTime} & \textbf{Open} & \textbf{High} & \textbf{Low} & \textbf{Close} \\
+		\midrule
+		02/01/2020 01:15:00 +01:00 & 13174 & 13194.5 & 13171.5 & 13177.5 \\
+		02/01/2020 01:16:00 +01:00 & 13177 & 13185 & 13177 & 13180.5 \\
+		02/01/2020 01:17:00 +01:00 & 13180.5 & 13183 & 13179 & 13181.5 \\
+		02/01/2020 01:18:00 +01:00 & 13181.5 & 13182 & 13180.5 & 13182 \\
+		02/01/2020 01:19:00 +01:00 & 13182 & 13183 & 13180.5 & 13181.5 \\
+		\midrule
+		\dots & \dots & \dots & \dots & \dots \\
+		\midrule
+		03/03/2022 09:10:00 +01:00 & 14019 & 14031 & 14010 & 14013 \\
+		03/03/2022 09:11:00 +01:00 & 14013 & 14019 & 14010 & 14000 \\
+		03/03/2022 09:12:00 +01:00 & 13999 & 14013 & 13996 & 14006 \\
+		03/03/2022 09:13:00 +01:00 & 14007 & 14015 & 13995 & 14009 \\
+		03/03/2022 09:14:00 +01:00 & 14009 & 14020 & 14009 & 14020 \\
+		\bottomrule
+	\end{tabular}
+	\caption{616397 osservazioni raccolte di open, high, low and close }
+	\label{tab:dati_finanziari}
+\end{table}
 
 \section{Pulizia e preprocessing}
 
 I dati finanziari spesso includono anomalie come valori mancanti o outlier che devono essere gestiti prima dell’analisi. Saranno implementate le seguenti tecniche di pulizia dei dati:
+
 \begin{itemize}
 	\item \textbf{Gestione dei valori mancanti}: rimuovere eventuali righe con valori mancanti per evitare distorsioni.
 	\item \textbf{Gestione degli outlier}: utilizzare tecniche di filtraggio per identificare ed eliminare gli outlier, assicurando che l’analisi si concentri sui valori centrali più rappresentativi.
 \end{itemize}
-\textbf{Outlier}: nel contesto dei dati azionari, un outlier (o valore anomalo) è un’osservazione che si discosta significativamente dalla norma o dalla tendenza generale del dataset. In altre parole, si tratta di un dato che è molto diverso rispetto agli altri valori presenti nel campione.
 
-Il motivo per cui vanno eliminati è che possono distorcere le analisi statistiche, poiché influenzano la media, la deviazione standard e altre misure di dispersione dei dati.
+\textbf{Outlier}: nel contesto dei dati azionari, un outlier (o valore anomalo) è un’osservazione che si discosta significativamente dalla norma o dalla tendenza generale del dataset. In altre parole, si tratta di un dato che è molto diverso rispetto agli altri valori presenti nel campione.\\
+
+Il motivo per cui vanno eliminati è che possono distorcere le analisi statistiche, poiché influenzano la media, la deviazione standard e altre misure di dispersione dei dati.\\
 
 Ecco alcune righe di codice utilizzate per ``pulire'' i dati:
 \begin{verbatim}
@@ -445,12 +482,34 @@ Ecco alcune righe di codice utilizzate per ``trasformare'' i dati:
 	standardized_data = (log_returns - log_returns.mean()) / log_returns.std()
 \end{verbatim}
 
-\begin{figure}[h]
+\begin{table}[h]
 	\centering
-	\includegraphics[width=0.8\textwidth]{./Pictures/dfnormal.png}
+	\renewcommand{\arraystretch}{1.2} % Spaziatura tra righe
+	\setlength{\tabcolsep}{6pt} % Spaziatura tra colonne
+	\small % Riduci leggermente la dimensione del testo per adattare meglio la tabella
+	\begin{tabular}{lcccc} % Colonne: l (sinistra), c (centrate)
+		\toprule
+		\textbf{DateTime} & \textbf{Open} & \textbf{High} & \textbf{Low} & \textbf{Close} \\
+		\midrule
+		02/01/2020 01:16:00 +01:00 & 0.513283 & -1.507703 & 0.853297 & 0.498567 \\
+		02/01/2020 01:17:00 +01:00 & 0.598720 & -0.555875 & 0.310070 & 0.166015 \\
+		02/01/2020 01:18:00 +01:00 & 0.170871 & 0.079182 & 0.154914 & 0.028292 \\
+		02/01/2020 01:19:00 +01:00 & 0.085317 & 0.158563 & 0.077349 & -0.083337 \\
+		02/01/2020 01:20:00 +01:00 & -0.085772 & 0.237926 & 0.154896 & 0.498415 \\
+		\midrule
+		\dots & \dots & \dots & \dots & \dots \\
+		\midrule
+		03/03/2022 09:10:00 +01:00 & -1.447601 & -0.000208 & -0.437935 & -1.250808 \\
+		03/03/2022 09:11:00 +01:00 & -0.965660 & -1.791008 & -1.459979 & -2.033947 \\
+		03/03/2022 09:12:00 +01:00 & -2.254511 & -0.149511 & -0.146421 & 0.938266 \\
+		03/03/2022 09:13:00 +01:00 & 1.288211 & -0.448180 & -0.584449 & 0.469065 \\
+		03/03/2022 09:14:00 +01:00 & 0.321767 & 0.746358 & 2.043913 & 1.719639 \\
+		\bottomrule
+	\end{tabular}
 	\caption{Rendimenti logaritmici standardizzati}
-	\label{fig:log_returns}
-\end{figure}
+	\label{tab:dati_finanziari_modificati}
+\end{table}
+
 \newpage
 \section{Normalizzazione}
 
@@ -463,12 +522,29 @@ Per applicare correttamente i modelli di copula, i dati devono essere trasformat
 	uniform_data = norm.cdf(standardized_data)
 \end{verbatim}
 
-\begin{figure}[h]
+\begin{table}[h]
 	\centering
-	\includegraphics[width=0.8\textwidth]{./Pictures/norm.png}
-	\caption{Dati uniformati all’intervallo [0,1]}
-	\label{fig:uniform_data}
-\end{figure}
+	\renewcommand{\arraystretch}{1.2} % Spaziatura tra righe
+	\setlength{\tabcolsep}{6pt} % Spaziatura tra colonne
+	\small % Riduci leggermente la dimensione del testo per adattare meglio la tabella
+	\begin{tabular}{cccc} % Quattro colonne centrate
+		\toprule
+		\textbf{Open} & \textbf{High} & \textbf{Low} & \textbf{Close} \\
+		\midrule
+		0.69612324 & 0.06581532 & 0.80325258 & 0.69095767 \\
+		0.7253202  & 0.28914825 & 0.6217461  & 0.56592753 \\
+		0.56783755 & 0.53155597 & 0.56155544 & 0.53303114 \\
+		\midrule
+		\dots & \dots & \dots & \dots \\
+		\midrule
+		0.01288201 & 0.44057533 & 0.44186549 & 0.82604578 \\
+		0.90116376 & 0.32701177 & 0.279459   & 0.68048837 \\
+		0.62618555 & 0.7722743  & 0.97951894 & 0.95725093 \\
+		\bottomrule
+	\end{tabular}
+	\caption{Dati uniformati all'intervallo [0,1]}
+	\label{tab:dati_array}
+\end{table}
 
 \section{Assunzioni nei modelli di copula}
 
@@ -484,8 +560,6 @@ Per l’uso corretto dei modelli di copula, è essenziale discutere alcune assun
 	\item \textbf{Normalità}: per l’utilizzo di una copula Gaussiana, i margini devono approssimare la normalità. Sebbene non sia strettamente necessario per altre copule come la t-Copula, una trasformazione per avvicinarsi alla normalità può essere utile per semplificare l’analisi.
 \end{itemize}
 
-\newpage
-
 \section{Distribuzione dei rendimenti}
 
 \begin{figure}[h]
@@ -495,17 +569,29 @@ Per l’uso corretto dei modelli di copula, è essenziale discutere alcune assun
 	\label{fig:log_returns_distribution}
 \end{figure}
 
-Ecco la distribuzione dei rendimenti logaritmici del DAX, calcolata su un subset dei dati disponibili. La distribuzione mostra la tipica forma a campana, con alcune code più pesanti, suggerendo la presenza di eventi estremi più frequenti rispetto a una normale distribuzione Gaussiana. Questa caratteristica supporta l’idea di utilizzare copule come la Student-t, che meglio cattura queste dipendenze nelle code.
+Ecco la distribuzione dei rendimenti logaritmici del DAX, calcolata su un subset dei dati disponibili. La distribuzione mostra la tipica forma a campana, con alcune code più pesanti, suggerendo la presenza di eventi estremi più frequenti rispetto a una normale distribuzione Gaussiana. Questa caratteristica supporta l’idea di utilizzare copule come la Student-t, che meglio cattura queste dipendenze nelle code.\\
 
 
 Di seguito la matrice di correlazione tra i rendimenti logaritmici delle diverse colonne di prezzo (Open, High, Low, Close) sempre del subset.
 
-\begin{figure}[h]
+\begin{table}[h]
 	\centering
-	\includegraphics[width=0.8\textwidth]{./Pictures/corr.png}
-	\caption{Matrice di correlazione}
-	\label{fig:correlation_matrix}
-\end{figure}
+	\renewcommand{\arraystretch}{1.2} % Spaziatura tra righe
+	\setlength{\tabcolsep}{8pt} % Spaziatura tra colonne
+	\small % Riduci leggermente la dimensione del testo per adattare meglio la tabella
+	\begin{tabular}{lcccc} % Prima colonna a sinistra, altre centrate
+		\toprule
+		& \textbf{Open} & \textbf{High} & \textbf{Low} & \textbf{Close} \\
+		\midrule
+		\textbf{Open}  & 1.0000  & 0.4716  & 0.4890  & 0.3141  \\
+		\textbf{High}  & 0.4716  & 1.0000  & 0.3353  & 0.5610  \\
+		\textbf{Low}   & 0.4890  & 0.3353  & 1.0000  & 0.5142  \\
+		\textbf{Close} & 0.3141  & 0.5610  & 0.5142  & 1.0000  \\
+		\bottomrule
+	\end{tabular}
+	\caption{Matrice di correlazione tra Open, High, Low e Close}
+	\label{tab:matrice_correlazione}
+\end{table}
 
 \section{Assunzioni generali}
 
@@ -582,8 +668,8 @@ stima (anche un implementazione Python) e un applicazione pratica utilizzando i 
 
 \subsection{Stima di Massima Verosimiglianza (MLE)}
 
-Il Metodo della Massima Verosimiglianza (MLE) `e una delle tecniche
-pi`u utilizzate per la stima dei parametri delle copule grazie alla sua efficienza e alla solidit`a teorica. Questo metodo si basa sul principio di determinare i parametri che massimizzano la probabilit`a (o verosimiglianza)
+Il Metodo della Massima Verosimiglianza (MLE) é una delle tecniche
+più utilizzate per la stima dei parametri delle copule grazie alla sua efficienza e alla solidità teorica. Questo metodo si basa sul principio di determinare i parametri che massimizzano la probabilità (o verosimiglianza)
 dei dati osservati sotto il modello scelto.\\
 
 \textbf{Procedura:}
@@ -637,7 +723,7 @@ uno strumento indispensabile nella modellazione finanziaria e in molte
 altre discipline quantitative.\\
 
 Vediamo anche qualche limitazione di questo metodo.\\
-\newpage
+
 \subsubsection{Limitazioni del MLE:}
 
 \begin{itemize}
@@ -675,8 +761,89 @@ Vediamo anche qualche limitazione di questo metodo.\\
 
 L'MLE è uno strumento potente e teoricamente solido per la stima dei parametri in contesti finanziari. Tuttavia, la sua applicazione pratica deve tenere conto delle caratteristiche specifiche dei dati finanziari e della complessità computazionale del modello scelto. In alternativa, quando i limiti dell'MLE diventano problematici, possono essere considerati altri approcci, come il metodo dei momenti, il metodo bayesiano o il metodo pseudo-MLE.\\
 
-\subsubsection{Implementazione Python:}
-\newpage
+\subsection{Implementazione Python per una copula Student t:}
+Mostriamo ora un'implementazione in Python di questo metodo.\\
+Iniziamo mostrando le librerie necessarie per l'esecuzione dello script.
+\begin{Verbatim}
+	import numpy as np
+	import pandas as pd
+	import scipy.stats as stats
+	import scipy.optimize as optimize
+	import matplotlib.pyplot as plt
+	from scipy.special import gamma
+	import os
+\end{Verbatim}
+Successivamente sará necessario un dataset giá normalizzato su cui applicare questo metodo. In questo esempio viene utilizzato il dataset $uniform\_data$ mostrato nella terza parte.\\
+In questo esempio utilizzeremo una copula Student t bivariata, le cui variabili saranno i valori $Open$ e i valori $Close$ che andremo ad indicare rispettivamente con $u$ e $v$.\\
+\begin{Verbatim}
+	# Selezione di due colonne per la copula
+	u, v = uniform_data['Open'].values, uniform_data['Close'].values
+\end{Verbatim}
+Implementiamo direttamente la Copula Student-t ricordando che la sua densitá é:\\
+\[
+c(u,v; \rho, \nu) =
+\frac{\Gamma\left(\frac{\nu+2}{2}\right) \Gamma\left(\frac{\nu}{2}\right)^{-1} \left(1 + \frac{x^2 + y^2 - 2\rho xy}{\nu(1 - \rho^2)}\right)^{-\frac{\nu+2}{2}}}
+{\sqrt{1 - \rho^2} \cdot \Gamma\left(\frac{\nu+1}{2}\right)^2 \Gamma\left(\frac{\nu}{2}\right)^{-2} \left(1 + \frac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}} \left(1 + \frac{y^2}{\nu}\right)^{-\frac{\nu+1}{2}}}
+\]
+
+dove \( x = t_{\nu}^{-1}(u) \) e \( y = t_{\nu}^{-1}(v) \).
+\begin{Verbatim}
+	def t_copula_pdf(u, v, rho, df):
+	x = stats.t.ppf(u, df)
+	y = stats.t.ppf(v, df)
+	
+	# Protezione contro overflow/underflow
+	try:
+	
+	numerator = gamma((df + 2) / 2) * gamma(df / 2) * (
+	1 + (x ** 2 + y ** 2 - 2 * rho * x * y) /
+	 (df * (1 - rho ** 2))) ** (-(df + 2) / 2)
+	 
+	denominator = gamma((df + 1) / 2) ** 2 * df * np.pi *
+	 np.sqrt(1 - rho ** 2) * (1 + x ** 2 / df) ** (
+	-(df + 1) / 2) * (1 + y ** 2 / df) ** (-(df + 1) / 2)
+	
+	result = numerator / denominator
+	
+	# Sostituire infiniti o NaN con un valore molto piccolo ma positivo
+	result = np.where(np.isfinite(result) & (result > 0), result, 1e-10)
+	return result
+	except:
+	# In caso di errore, ritorna un valore di default
+	return np.ones_like(u) * 1e-10
+\end{Verbatim}
+Implementiamo la funzione likelihood
+\begin{verbatim}
+	def t_copula_likelihood(params, u, v):
+	rho = np.tanh(params[0])
+	df = np.exp(params[1]) + 2
+	likelihoods = t_copula_pdf(u, v, rho, df)
+	
+	# Gestione di valori non validi
+	valid_idx = ~np.isnan(likelihoods) & (likelihoods > 0)
+	if not np.any(valid_idx):
+	return 1e10
+	return -np.sum(np.log(likelihoods[valid_idx]))
+\end{verbatim}
+Implementiamo la stima MLE
+\begin{verbatim}
+	def estimate_t_copula_MLE(u, v):
+	initial_guess = [0.5, np.log(8)]
+	bounds = [(-10, 10), (-10, 10)]  # Limiti per rho e log(df)
+	result = optimize.minimize(t_copula_likelihood, initial_guess, args=(u, v),
+	method='L-BFGS-B', bounds=bounds)
+	rho_estimated = np.tanh(result.x[0])
+	df_estimated = np.exp(result.x[1]) + 2
+	return rho_estimated, df_estimated
+\end{verbatim}
+Infine possiamo osservare i risultati ottenuti in questo modo
+\begin{verbatim}
+	rho_t_mle, df_t_mle = estimate_t_copula_MLE(u, v)
+	print(f" Parametro stimato (rho) per la Copula t-Student: {rho_t_mle:.4f}")
+	print(f" Gradi di libertà stimati per la Copula t-Student: {df_t_mle:.2f}")
+\end{verbatim}
+I risultati numerici e i valori di stima del nostro dataset saranno calcolati e mostrati più avanti
+
 \subsection{Metodo dei Momenti}
 
 Il metodo dei momenti è una tecnica di stima che si basa sull’equiparazione dei momenti teorici di una distribuzione con i momenti campionari calcolati dai dati osservati. Nel contesto delle copule, il metodo può essere utilizzato per stimare i parametri che descrivono la dipendenza tra le variabili aleatorie, garantendo coerenza tra la struttura di dipendenza modellata e quella osservata.
@@ -799,80 +966,155 @@ La scelta tra il tau di Kendall e il rho di Spearman dipende spesso dalla specif
 
 In generale, sia il tau di Kendall che il rho di Spearman sono misure utili della concordanza e possono fornire informazioni preziose sulla dipendenza tra due variabili casuali.
 
-\subsection{Esempio Numerico}
+\subsection{Relazioni tra parametri delle copule e misure di dipendenza}
 
-Consideriamo un caso in cui abbiamo due variabili aleatorie \( X \) e \( Y \) correlate e vogliamo modellare la loro dipendenza usando una copula di Gumbel. Il parametro della copula di Gumbel, \( \theta \), regola la dipendenza tra le variabili e può essere stimato utilizzando il metodo dei momenti.
+Le formule che legano il tau di Kendall ai parametri delle diverse copule:\\
 
-\subsubsection{Passaggi Principali}
+\begin{enumerate}
+	\item \textbf{Copula Gaussiana}
+	\[
+	\tau = \frac{2}{\pi} \arcsin(\rho)
+	\]
+	\textbf{Inversione:}
+	\[
+	\rho = \sin\left(\frac{\pi \tau}{2}\right)
+	\]
+	\item \textbf{Copula t-Student}
+	\[
+	\tau = \frac{2}{\pi} \arcsin(\rho)
+	\]
+	Stessa relazione della Gaussiana, indipendente dai gradi di libertà \( \nu \).
+	\item \textbf{Copula di Clayton}
+	\[
+	\tau = \frac{\theta}{\theta + 2}
+	\]
+	\textbf{Inversione:}
+	\[
+	\theta = \frac{2\tau}{1 - \tau}
+	\]
+	\item \textbf{Copula di Gumbel}
+	\[
+	\tau = 1 - \frac{1}{\theta}
+	\]
+	\textbf{Inversione:}
+	\[
+	\theta = \frac{1}{1 - \tau}
+	\]
+	\item \textbf{Copula di Frank}
+	\[
+	\tau = 1 - \frac{4}{\theta} \left( 1 - D_1(\theta) \right)
+	\]
+	dove \( D_1(\theta) \) è la funzione di Debye:
+	\[
+	D_1(\theta) = \frac{1}{\theta} \int_0^{\theta} \frac{t}{e^t - 1} dt
+	\]
+	Non esiste una formula di inversione semplice.
+\end{enumerate}
 
-\paragraph{1. Definizione della Copula di Gumbel}
+\subsection{Codice Python metodo dei momenti}
 
-La copula di Gumbel \( C(u,v; \theta) \) è definita come:
+\subsubsection{Applicazione alla copula Gumbel}
 
-\[
-C(u,v; \theta) = \exp \left( - \left( [ -\ln u]^\theta + [-\ln v]^\theta \right)^{1/\theta} \right)
-\]
+Per prima cosa definiamo la relazione tra il tau di Kendall e il parametro theta della Gumbel.
 
-con \( \theta \geq 1 \). Valori più grandi di \( \theta \) indicano una maggiore dipendenza.
+\begin{verbatim}
+	def gumbel_theta_kendall(tau):
+	"""
+	Calcola il parametro theta della copula di Gumbel a partire da tau di Kendall.
+	Formula: theta = 1 / (1 - tau)
+	"""
+	return 1 / (1 - tau)
+\end{verbatim}
 
-\paragraph{2. Relazione con il Coefficiente di Kendall (\( \tau \))}
+Successivamente impostiamo una funzione che calcoli il tau di Kendall in maniera ottimizzata (non possiamo calcolarlo come nell'esercizio numerico in seguito all'elevato costo computazionale).
 
-Per la copula di Gumbel, il parametro \( \theta \) è legato al coefficiente di Kendall \( \tau \) dalla formula:
+\begin{Verbatim}
+	from scipy.stats import kendalltau
+	
+	def kendall_tau_multivariate_optimized(dataset):
+	"""
+	Calcola il Kendall tau medio per un dataset multivariato usando scipy.
+	"""
+	n_vars = dataset.shape[1]
+	taus = []
+	
+	# Calcola Kendall tau per ogni coppia di variabili
+	for i in range(n_vars):
+	for j in range(i + 1, n_vars):
+	tau, _ = kendalltau(dataset[:, i], dataset[:, j])
+	taus.append(tau)
+	
+	# Restituisce il tau medio e il numero di coppie concordanti/discordanti
+	tau_mean = np.mean(taus)
+	return tau_mean
+\end{Verbatim}
 
-\[
-\tau = 1 - \frac{1}{\theta}
-\]
+Per concludere implementiamo il metodo dei momenti ottimizzato.
 
-Da questa relazione possiamo stimare \( \theta \) se conosciamo \( \tau \).
+\begin{Verbatim}
+	def method_of_moments_gumbel_optimized(dataset):
+	"""
+	Applica il metodo dei momenti per stimare
+	il parametro theta della copula di Gumbel.
+	"""
+	# Calcola il tau di Kendall medio
+	tau_mean = kendall_tau_multivariate_optimized(dataset)
+	
+	# Calcola il parametro theta
+	theta = gumbel_theta_kendall(tau_mean)
+	return theta, tau_mean
+\end{Verbatim}
 
-\subsubsection{Esempio con Dati Simulati}
+Ora non ci resta che applicare questo metodo al nostro dataset $uniform \_data$ e ottenere il risultato.
 
-Abbiamo i seguenti dati bivariati:
+\begin{Verbatim}
+	# Stima il parametro theta
+	theta_gumbel, tau_mean = method_of_moments_gumbel_optimized(uniform_data)
+	print(f"Parametro theta stimato della Gumbel: {theta_gumbel:.4f}")
+\end{Verbatim}
 
-\[
-(X, Y) = \{ (1.2, 1.5), (2.3, 2.8), (1.8, 1.9), (3.0, 3.1), (2.5, 2.7) \}
-\]
 
-\paragraph{1. Calcolo del Coefficiente di Kendall (\( \tau \))}
+\newpage
+\subsubsection{Applicazione alla copula Clayton}
 
-Il coefficiente di Kendall si calcola confrontando tutti i coppie di punti \( (X_i, Y_i) \) per determinare se sono concordanti o discordanti.
+Definiamo la relazione tra il tau di Kendall e il parametro theta della Clayton.
 
-\begin{itemize}
-	\item \textbf{Concordanza}: \( (X_i - X_j)(Y_i - Y_j) > 0 \)
-	\item \textbf{Discordanza}: \( (X_i - X_j)(Y_i - Y_j) < 0 \)
-\end{itemize}
+\begin{verbatim}
+	def clayton_theta_kendall(tau):
+	"""
+	Calcola il parametro theta della copula di Clayton a partire da tau di Kendall.
+	Formula: theta = 2*tau / (1 - tau)
+	"""
+	return 2*tau / (1 - tau)
+\end{verbatim}
 
-Numero di coppie totali:
+La funzione per il calcolo del tau di Kendal é esattamente uguale alla precedente.\\
 
-\[
-\binom{5}{2} = 10.
-\]
+Implementiamo il metodo dei momenti ottimizzato.
 
-Contiamo le coppie concordanti e discordanti:
+\begin{Verbatim}
+	def method_of_moments_clayton_optimized(dataset):
+	"""
+	Applica il metodo dei momenti per stimare il parametro theta della copula di Clayton.
+	"""
+	# Calcola il tau di Kendall medio
+	tau_mean = kendall_tau_multivariate_optimized(dataset)
+	
+	# Calcola il parametro theta
+	theta = clayton_theta_kendall(tau_mean)
+	return theta, tau_mean
+\end{Verbatim}
 
-\begin{itemize}
-	\item \textbf{Concordanti}: 9
-	\item \textbf{Discordanti}: 1
-\end{itemize}
+Applichiamo questo metodo al nostro dataset $uniform \_data$ e otteniamo il risultato.
 
-Il coefficiente di Kendall è:
+\begin{Verbatim}
+	# Stima il parametro theta
+	theta_clayton, tau_mean = method_of_moments_clayton_optimized(uniform_data)
+	print(f"Parametro theta stimato della Clayton: {theta_clayton:.4f}")
+\end{Verbatim}
 
-\[
-\tau = \frac{\text{Concordanti} - \text{Discordanti}}{\text{Totale coppie}} = \frac{9 - 1}{10} = 0.8
-\]
 
-\paragraph{2. Stima del parametro \( \theta \)}
-
-Dalla relazione \( \tau = 1 - \frac{1}{\theta} \), risolviamo per \( \theta \):
-
-\[
-\theta = \frac{1}{1 - \tau} = \frac{1}{1 - 0.8} = 5
-\]
-
-Quindi, stimiamo che il parametro di dipendenza della copula di Gumbel sia \( \theta = 5 \).
-
-\subsubsection{Codice dax}
-
+\newpage
 \subsection{Stima Bayesiana}
 
 La stima bayesiana è un approccio alla statistica basato sul teorema di Bayes, che combina informazioni a priori con dati osservati per aggiornare la nostra conoscenza su un fenomeno incerto. È ampiamente utilizzata in applicazioni come l’apprendimento automatico, l’inferenza statistica e il processo decisionale.
@@ -885,7 +1127,7 @@ La statistica bayesiana si fonda sul teorema di Bayes, che dice che, data due va
 f(x \mid y) = \frac{f(y, x)}{f(y)} = \frac{f(y \mid x) f(x)}{f(y)}
 \]
 
-dove \( f(y) = \int f(y, x)dx \). 
+dove \( f(y) = \int f(y, x)dx \). \\
 
 Il teorema di Bayes permette di passare dalla condizionata di \( y \) rispetto a \( x \) a quella di \( x \) rispetto a \( y \).\\
 
@@ -963,7 +1205,451 @@ Le \textbf{copule} sono utili per modellare le dipendenze tra variabili aleatori
 	\end{itemize}
 \end{enumerate}
 
-\subsubsection{Python}
+\subsection{Metodo MCMC in Python}
+Il metodo di Monte Carlo a catena di Markov (MCMC) è una tecnica di campionamento utilizzata per approssimare distribuzioni di probabilità complesse. Questo metodo si basa sulla costruzione di una catena di Markov il cui stato stazionario coincide con la distribuzione target desiderata. Tra gli algoritmi più comuni per l'MCMC troviamo Metropolis-Hastings e Gibbs Sampling.
+
+L'MCMC è ampiamente usato in statistica bayesiana, econometria, machine learning e fisica computazionale per la stima di parametri in modelli complessi dove l'integrazione diretta non è possibile.
+
+\subsubsection{Implementazione in Python}
+Di seguito viene presentata un'implementazione del metodo MCMC in Python utilizzando la copula gaussiana per modellare la dipendenza tra variabili finanziarie.\\
+
+Librerie utilizzate
+\begin{verbatim}
+	import numpy as np
+	import pandas as pd
+	import scipy.stats as stats
+	import matplotlib.pyplot as plt
+	from scipy.optimize import minimize
+\end{verbatim}
+Utilizziamo sempre le due colonne $Open$ e $Close$ del dataset $uniform\_data$ come campioni chiamndole corrispettivamente $u\_unif$ e $v\_unif$.\\
+
+Definizione della funzione di verosimiglianza per la Copula Gaussiana
+\begin{verbatim}
+	def gaussian_copula_log_likelihood(rho, u, v):
+	"""Calcola la log-verosimiglianza della copula gaussiana."""
+	if abs(rho) >= 0.999:  # Evita problemi numerici ai bordi
+	return -np.inf
+	
+	x = stats.norm.ppf(u)
+	y = stats.norm.ppf(v)
+	
+	# Log-verosimiglianza della copula gaussiana
+	term1 = -0.5 * np.log(1 - rho ** 2)
+	term2 = -(rho ** 2 * (x ** 2 + y ** 2) - 2 * rho * x * y) / (2 * (1 - rho ** 2))
+	
+	return np.sum(term1 + term2)
+\end{verbatim}
+Ora definiamo l'algoritmo MCMC migliorato con multiple chain e diagnostica robusta
+\begin{verbatim}
+	def improved_metropolis_hastings(log_likelihood, u, v, n_chains=4, 
+	n_iter=20000, burn_in=5000,
+	target_acceptance=0.234):
+	"""
+	Implementazione migliorata di Metropolis-Hastings con catene multiple
+	e adattamento del passo basato su Gelman et al. (1996).
+	"""
+	n_params = 1  # Dimensione del parametro (solo rho)
+	
+	# Inizializzazione di catene multiple con punti di partenza diversi
+	chains = np.zeros((n_chains, n_iter, n_params))
+	
+	# Punti di partenza distribuiti uniformemente tra -0.9 e 0.9
+	starting_points = np.linspace(-0.8, 0.8, n_chains)
+	
+	# Parametri per l'adattamento
+	gamma1 = 0.75  # Parametro che controlla l'adattamento iniziale
+	adaptation_steps = int(n_iter * 0.6)  # Numero di passi di adattamento
+	
+	# Memorizza i tassi di accettazione e le larghezze delle proposte
+	acceptance_rates = np.zeros(n_chains)
+	proposal_widths = np.ones(n_chains) * 0.1  # Valori iniziali
+	
+	print("\n====== AVVIO MCMC CON MULTIPLE CATENE ======")
+	
+	for c in range(n_chains):
+	chain = chains[c]
+	chain[0, 0] = starting_points[c]  # Punto di partenza
+	accepted = 0
+	
+	print(f"- Catena {c + 1}: punto di partenza = {starting_points[c]:.4f}")
+	
+	for i in range(1, n_iter):
+	current_rho = chain[i - 1, 0]
+	
+	# Passo adattivo che diminuisce con le iterazioni
+	if i <= adaptation_steps:
+	adapt_factor = (i / adaptation_steps) ** gamma1
+	current_width = proposal_widths[c] * 
+	(1 - adapt_factor) + 0.1 * adapt_factor
+	else:
+	current_width = proposal_widths[c]
+	
+	# Proposta: U(-$\delta$,$\delta$) centrata sull'attuale valore
+	delta = current_width
+	proposal = current_rho + np.random.uniform(-delta, delta)
+	
+	# Rifletti se fuori dai limiti (-0.999, 0.999)
+	if proposal <= -0.999:
+	proposal = -0.999 + ((-0.999) - proposal)
+	elif proposal >= 0.999:
+	proposal = 0.999 - (proposal - 0.999)
+	
+	# Calcola il rapporto di accettazione
+	log_p_current = log_likelihood(current_rho, u, v)
+	log_p_proposal = log_likelihood(proposal, u, v)
+	log_accept_ratio = log_p_proposal - log_p_current
+	
+	# Accetta o rifiuta
+	if np.log(np.random.random()) < log_accept_ratio:
+	chain[i, 0] = proposal
+	accepted += 1
+	else:
+	chain[i, 0] = current_rho
+	
+	# Adatta la larghezza della proposta
+	if i % 500 == 0 and i <= adaptation_steps:
+	batch_acceptance = accepted / i
+	
+	# Aggiusta la larghezza per avvicinarsi al tasso di accettazione target
+	if batch_acceptance > target_acceptance:
+	proposal_widths[c] *= 1.1  # Aumenta
+	else:
+	proposal_widths[c] *= 0.9  # Diminuisci
+	
+	# Limita la larghezza per sicurezza
+	proposal_widths[c] = max(0.01, min(1.0, proposal_widths[c]))
+	
+	if i % 5000 == 0:
+	print(f"  Iterazione {i}, catena {c + 1}: accettazione = {batch_acceptance:.4f}, "
+	f"larghezza = {proposal_widths[c]:.4f}")
+	
+	# Statistiche finali per questa catena
+	acceptance_rates[c] = accepted / n_iter
+	print(f"- Catena {c + 1} completata: accettazione = {acceptance_rates[c]:.4f}, "
+	f"larghezza finale = {proposal_widths[c]:.4f}")
+	
+	# Rimuovi burn-in e unisci le catene per l'analisi
+	combined_samples = chains[:, burn_in:, 0].flatten()
+	
+	return chains, acceptance_rates, combined_samples
+\end{verbatim}
+Ora eseguiamo MCMC migliorato
+\begin{verbatim}
+	n_chains = 4
+	n_iter = 20000
+	burn_in = 5000
+	
+	chains, acceptance_rates, combined_samples = improved_metropolis_hastings(
+	gaussian_copula_log_likelihood,
+	u_unif,
+	v_unif,
+	n_chains=n_chains,
+	n_iter=n_iter,
+	burn_in=burn_in
+	)
+\end{verbatim}
+Verifichiamo la convergenza del metodo tramite la diagnostica di Gelman-Rubin.\\
+
+La diagnostica di Gelman-Rubin, nota anche come \(\hat{R}\), è un metodo per valutare la convergenza delle catene MCMC. Confronta la varianza tra le catene con la varianza interna delle singole catene, fornendo un'indicazione di stabilità del campionamento. Se \(\hat{R} \approx 1\), le catene sono considerate convergenti; valori superiori a 1.1 indicano potenziali problemi di convergenza e la necessità di iterazioni aggiuntive.
+
+\begin{verbatim}
+	def gelman_rubin(chains, burn_in=0):
+	"""Calcola la diagnostica R-hat di Gelman-Rubin."""
+	n_chains, n_iter, n_params = chains.shape
+	
+	if burn_in > 0:
+	chains = chains[:, burn_in:, :]
+	
+	n_iter = chains.shape[1]
+	
+	# Medie delle catene
+	chain_means = np.mean(chains, axis=1)  # shape: (n_chains, n_params)
+	
+	# Varianza tra le catene
+	B = n_iter * np.var(chain_means, axis=0, ddof=1)  # shape: (n_params,)
+	
+	# Varianza entro le catene
+	W = np.mean(np.var(chains, axis=1, ddof=1), axis=0)  # shape: (n_params,)
+	
+	# Stima complessiva della varianza
+	var_hat = ((n_iter - 1) / n_iter) * W + (1 / n_iter) * B
+	
+	# Calcolo R-hat
+	R_hat = np.sqrt(var_hat / W)
+	
+	return R_hat
+\end{verbatim}
+Infine visualizziamo i risultati.
+\begin{verbatim}
+	rho_mean = np.mean(combined_samples)
+	rho_std = np.std(combined_samples)
+	rho_median = np.median(combined_samples)
+	rho_ci = np.percentile(combined_samples, [2.5, 97.5])
+	
+	print("\n====== RISULTATI FINALI ======")
+	print(f" Stima Bayesiana di $\rho$ con MCMC: {rho_mean:.4f} ± {rho_std:.4f}")
+	print(f" Mediana: {rho_median:.4f}")
+	print(f" Intervallo di credibilità al 95%: [{rho_ci[0]:.4f}, {rho_ci[1]:.4f}]")
+	print(f" Dimensione del campione efficace: {len(combined_samples)}")
+	
+\end{verbatim}
+\newpage
+\section{Implementazione Pratica: Applicazione ai Dati del DAX}
+\subsection{Preparazione dei dati}
+La descrizione dettagliata del dataset utilizzato è già fornita nella terza parte della tesi. In questa sezione, ci concentreremo invece sull'implementazione di un processo strutturato per la preparazione e la verifica dei dati, con l'obiettivo di garantirne la qualità e l'affidabilità per le analisi successive.
+
+Il codice sviluppato esegue una serie di operazioni di diagnostica e pulizia sui dati di mercato, consentendo di ottenere un dataset coerente, privo di errori e pronto per le operazioni analitiche.\\
+
+Librerie utilizzate
+\begin{verbatim}
+	import pandas as pd
+	import numpy as np
+	import matplotlib.pyplot as plt
+	import os
+	import csv
+\end{verbatim}
+
+\subsubsection{Parte 1: Diagnostica del file CSV}
+
+La prima fase del processo di preparazione dei dati consiste nella \textbf{diagnostica del file CSV}. 
+L'obiettivo principale di questa sezione è garantire che il file di dati esista, sia leggibile e abbia una struttura coerente. 
+Per farlo, vengono eseguite le seguenti operazioni:
+
+\begin{enumerate}
+	\item \textbf{Verifica dell'esistenza del file}
+	\begin{itemize}
+		\item Il codice controlla se il file specificato (\texttt{DAX\_3Y-1M.csv}) è presente nella directory corrente.
+		\item Se il file non esiste, viene stampato un messaggio di errore con l'indicazione della directory corrente e dei file disponibili, facilitando il debugging.
+	\end{itemize}
+	
+	\item \textbf{Ispezione delle prime righe del file}
+	\begin{itemize}
+		\item Se il file è stato trovato, vengono lette e stampate le prime dieci righe del file per ottenere una visione preliminare della sua struttura.
+		\item Questo aiuta a identificare eventuali problemi evidenti, come caratteri strani, righe mancanti o errori di formattazione.
+	\end{itemize}
+	
+	\item \textbf{Identificazione del delimitatore}
+	\begin{itemize}
+		\item Poiché i file CSV possono essere separati da virgole (\texttt{,}), punti e virgola (\texttt{;}), tabulazioni (\texttt{\textbackslash t}) o altri caratteri, viene utilizzata la funzione \texttt{csv.Sniffer()} per rilevare automaticamente il delimitatore corretto.
+		\item Questo passaggio è essenziale per evitare errori di lettura quando si carica il file con \texttt{pandas}.
+	\end{itemize}
+	
+	\item \textbf{Verifica dell'intestazione}
+	\begin{itemize}
+		\item Il codice verifica se il file contiene un'intestazione (ovvero nomi di colonne) e la conferma all'utente.
+		\item Se l'intestazione non è presente, sarà necessario gestire i nomi delle colonne in modo esplicito nelle fasi successive.
+	\end{itemize}
+\end{enumerate}
+
+Questa prima parte assicura che il file sia disponibile e che la sua struttura sia chiara prima di procedere con la lettura e la pulizia dei dati. 
+Se il file presenta problemi, gli errori vengono segnalati tempestivamente, evitando che il codice fallisca nelle fasi successive.
+Nel terminale visualizzo:\\
+
+ \section*{DIAGNOSTICA DEL FILE CSV}
+ 
+ \noindent\rule{\textwidth}{0.4pt}
+ 
+ \textcolor{green}{File 'DAX\_3Y-1M.csv' trovato.}
+ 
+ \noindent\rule{\textwidth}{0.4pt}
+ 
+ \subsection*{Ispezione delle prime righe del file:}
+ \begin{verbatim}
+ 	Riga 1: DateTime, Open, High, Low, Close
+ 	Riga 2: 02/01/2020 01:15:00 +01:00, 13174, 13194.5, 13171.5, 13177.5
+ 	Riga 3: 02/01/2020 01:16:00 +01:00, 13180, 13180.5, 13179, 13181.5
+ 	Riga 4: 02/01/2020 01:17:00 +01:00, 13182, 13182, 13180.5, 13181.5
+ 	...
+ \end{verbatim}
+ 
+ \textcolor{blue}{Delimitatore rilevato: ','}  
+ 
+ \textcolor{blue}{Intestazione rilevata: False}  
+ 
+ \subsection*{Lettura riuscita con delimitatore ','}
+ \begin{verbatim}
+ 	DateTime                Open     High     Low     Close  Unnamed: 5
+ 	0  02/01/2020 01:15:00 +01:00  13174  13194.5  13171.5  13177.5      NaN
+ 	1  02/01/2020 01:16:00 +01:00  13180  13180.5  13179    13181.5      NaN
+ 	2  02/01/2020 01:17:00 +01:00  13182  13182    13180.5  13181.5      NaN
+ 	...
+ \end{verbatim}
+ 
+ \textcolor{green}{Lettura base riuscita}  
+ 
+ \textbf{Dimensioni:} (616397, 6)  
+ 
+ \textbf{Colonne:} ['DateTime', 'Open', 'High', 'Low', 'Close', 'Unnamed: 5']  
+ 
+ \textbf{Prime 5 righe:}
+ \begin{verbatim}
+ 	DateTime                Open     High     Low     Close  Unnamed: 5
+ 	0  02/01/2020 01:15:00 +01:00  13174  13194.5  13171.5  13177.5      NaN
+ 	1  02/01/2020 01:16:00 +01:00  13180  13180.5  13179    13181.5      NaN
+ 	2  02/01/2020 01:17:00 +01:00  13182  13182    13180.5  13181.5      NaN
+ 	...
+ \end{verbatim}
+ 
+\subsubsection{Parte 2: Lettura e Correzione dei Dati}
+
+Dopo aver verificato l'esistenza e la struttura del file CSV nella fase di diagnostica, questa seconda parte si concentra sulla \textbf{lettura e correzione dei dati}, assicurandosi che il file venga caricato correttamente e che le colonne siano interpretate nel formato corretto.
+
+Le operazioni principali svolte in questa fase sono:
+
+\begin{enumerate}
+	\item \textbf{Tentativi di lettura del file con diversi delimitatori}
+	\begin{itemize}
+		\item I file CSV possono essere separati da diversi caratteri (virgole \texttt{,}, punti e virgola \texttt{;}, tabulazioni \texttt{\textbackslash t}, barre verticali \texttt{|}).
+		\item Il codice prova a leggere il file con ciascun delimitatore e controlla quale funziona senza errori.
+		\item Se la lettura con un certo delimitatore ha successo, il codice interrompe il ciclo e memorizza il delimitatore corretto per le fasi successive.
+	\end{itemize}
+	
+	\item \textbf{Gestione di possibili errori di encoding}
+	\begin{itemize}
+		\item I file CSV possono essere salvati con differenti codifiche (\texttt{UTF-8}, \texttt{ISO-8859-1}, \texttt{latin1}, \texttt{cp1252}, ecc.), e una codifica errata può causare errori nella lettura.
+		\item Viene tentata la lettura con \texttt{UTF-8}, ma se fallisce, vengono provate altre codifiche.
+		\item Se tutte le codifiche testate falliscono, viene segnalato un errore.
+	\end{itemize}
+	
+	\item \textbf{Verifica della struttura del DataFrame}
+	\begin{itemize}
+		\item Dopo aver letto il file, vengono stampate le prime righe per confermare che i dati siano stati caricati correttamente.
+		\item Viene controllato se il dataset contiene colonne indesiderate, come \texttt{Unnamed: X}, che potrebbero derivare da errori nel file originale.
+		\item Se esistono colonne numeriche con dati misti (numeri e stringhe), viene segnalato un avviso.
+	\end{itemize}
+	
+	\item \textbf{Conversione dei dati al formato corretto}
+	\begin{itemize}
+		\item Le colonne numeriche (\texttt{Open}, \texttt{High}, \texttt{Low}, \texttt{Close}) vengono convertite in formato numerico, forzando la conversione (\texttt{errors='coerce'}), in modo da trasformare eventuali valori errati in \texttt{NaN} (valori mancanti).
+		\item Se una colonna essenziale come \texttt{DateTime} esiste, viene convertita in un formato di data/ora (\texttt{datetime64}).
+		\item Se alcune righe contengono errori di conversione (es. date errate o valori non numerici), vengono rimosse.
+	\end{itemize}
+\end{enumerate}
+Questa fase assicura che il file venga letto in modo robusto e senza errori, adattando la configurazione al formato effettivo del CSV. Il risultato finale è un dataset pulito e ben strutturato, pronto per ulteriori operazioni di analisi e modellazione.\\
+Nel terminale visualizzeremo:\\
+
+\subsection*{Correzione e Preprocessing dei Dati}
+
+\noindent\rule{\textwidth}{0.4pt}
+
+\textbf{Impossibile convertire 'DateTime'}: il valore "13/01/2020 01:15:00 +01:00" non corrisponde al formato \texttt{"\%m/\%d/\%Y \%H:\%M:\%S \%z"} alla posizione 8672.  
+Possibili soluzioni:
+\begin{itemize}
+	\item Usare \texttt{format} se le stringhe hanno un formato coerente.
+	\item Usare \texttt{format="ISO8601"} se le stringhe sono tutte in ISO8601 ma non esattamente nello stesso formato.
+	\item Usare \texttt{format="mixed"} per inferire automaticamente il formato per ogni elemento individualmente.
+\end{itemize}
+
+\textbf{Tentativo di correzione del formato della data:}  
+Esempi di date convertite:
+\begin{verbatim}
+	'02/01/2020 01:15:00 +01:00', '02/01/2020 01:16:00 +01:00', 
+	'02/01/2020 01:17:00 +01:00', '02/01/2020 01:18:00 +01:00'
+\end{verbatim}
+
+\subsection*{Conversione colonne di prezzo}
+
+Colonne convertite: \texttt{Open}, \texttt{High}, \texttt{Low}, \texttt{Close}  
+Tipi di dati iniziali:
+\begin{verbatim}
+	Open      object
+	High      object
+	Low       object
+	Close     object
+	dtype: object
+\end{verbatim}
+
+Le seguenti colonne sono state convertite correttamente:
+\begin{itemize}
+	\item Colonna \texttt{Open}: convertita da formato con virgole
+	\item Colonna \texttt{High}: convertita da formato con virgole
+	\item Colonna \texttt{Low}: convertita da formato con virgole
+	\item Colonna \texttt{Close}: convertita da formato con virgole
+\end{itemize}
+
+\textbf{Rimosse 0 righe con valori mancanti}
+
+\subsection*{Statistiche sui dati numerici}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{lcccc}
+		\hline
+		& Open & High & Low & Close \\
+		\hline
+		count & 616397 & 616397 & 616397 & 616397 \\
+		mean  & 13884.68 & 13887.52 & 13881.79 & 13884.66 \\
+		std   & 1747.75  & 1763.92  & 1733.78  & 1747.75 \\
+		min   & 7970.00  & 7970.00  & 7970.00  & 7970.00 \\
+		25\%  & 12878.50 & 12878.50 & 12878.50 & 12878.50 \\
+		50\%  & 13914.00 & 13914.00 & 13914.00 & 13914.00 \\
+		75\%  & 15487.00 & 15487.00 & 15487.00 & 15487.00 \\
+		max   & 16294.00 & 16294.00 & 16294.00 & 16294.00 \\
+		\hline
+	\end{tabular}
+	\caption{Statistiche descrittive delle colonne numeriche}
+\end{table}
+
+\subsection*{Identificazione degli outlier}
+
+\begin{itemize}
+	\item Colonna \texttt{Open}: 6270 potenziali outlier (1.02\%)
+	\item Colonna \texttt{High}: 6232 potenziali outlier (1.01\%)
+	\item Colonna \texttt{Low}: 6331 potenziali outlier (1.03\%)
+	\item Colonna \texttt{Close}: 6287 potenziali outlier (1.02\%)
+\end{itemize}
+
+\subsection*{Impostazione indice e salvataggio}
+
+La colonna \texttt{DateTime} è stata impostata come indice.  
+I dati puliti sono stati salvati nel file \texttt{DAX\_cleaned.csv}.
+
+\subsection*{Visualizzazione dei dati puliti}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{lcccccc}
+		\hline
+		DateTime & Open & High & Low & Close & Unnamed: 5 \\
+		\hline
+		02/01/2020 01:15:00 +01:00 & 13174.0 & 13194.5 & 13171.5 & 13177.5 & NaN \\
+		02/01/2020 01:15:00 +01:00 & 13174.0 & 13194.5 & 13171.5 & 13177.5 & NaN \\
+		02/01/2020 01:16:00 +01:00 & 13177.0 & 13185.0 & 13171.0 & 13180.5 & NaN \\
+		02/01/2020 01:16:00 +01:00 & 13177.0 & 13185.0 & 13171.0 & 13180.5 & NaN \\
+		02/01/2020 01:17:00 +01:00 & 13180.5 & 13181.5 & 13181.5 & 13182.5 & NaN \\
+		02/01/2020 01:16:00 +01:00 & 13177.0 & 13185.0 & 13171.0 & 13180.5 & NaN \\
+		02/01/2020 01:16:00 +01:00 & 13177.0 & 13185.0 & 13171.0 & 13180.5 & NaN \\
+		02/01/2020 01:16:00 +01:00 & 13177.0 & 13185.0 & 13171.0 & 13180.5 & NaN \\
+		02/01/2020 01:15:00 +01:00 & 13174.0 & 13194.5 & 13171.5 & 13177.5 & NaN \\
+		\hline
+	\end{tabular}
+	\caption{Dati puliti dopo il preprocessing}
+\end{table}
+
+\subsection*{Visualizzazione grafica dei dati puliti}
+Per comodità mostriamo solo il prezzo delle Open.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.1\textwidth]{Pictures/price_chart.png}
+	\caption{Ultimi 100 valori di prezzo}
+	\label{fig:price_chart}
+\end{figure}
+
+\subsection{Stima dei Parametri per Diverse Copule}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -975,7 +1661,10 @@ Le \textbf{copule} sono utili per modellare le dipendenze tra variabili aleatori
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\bibliography{references}
+\nocite{*}  % Mostra tutte le referenze, anche se non citate nel testo
+\bibliographystyle{plainnat}  % Stile della bibliografia
+\bibliography{references}  % Nome del file .bib senza estensione
+
 
 
 

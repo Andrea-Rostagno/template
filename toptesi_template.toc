@@ -41,32 +41,34 @@
 \contentsline {section}{\numberline {5.2}Metodi di stima dei parametri}{38}{section.5.2}%
 \contentsline {subsection}{\numberline {5.2.1}Stima di Massima Verosimiglianza (MLE)}{38}{subsection.5.2.1}%
 \contentsline {subsubsection}{Vantaggi del MLE:}{39}{section*.2}%
-\contentsline {subsubsection}{Limitazioni del MLE:}{40}{section*.3}%
+\contentsline {subsubsection}{Limitazioni del MLE:}{39}{section*.3}%
 \contentsline {subsubsection}{Considerazioni finali}{40}{section*.4}%
-\contentsline {subsubsection}{Implementazione Python:}{40}{section*.5}%
-\contentsline {subsection}{\numberline {5.2.2}Metodo dei Momenti}{41}{subsection.5.2.2}%
-\contentsline {subsubsection}{Applicazione alle copule}{41}{section*.6}%
-\contentsline {subsubsection}{Ambiti di Applicazione}{41}{section*.7}%
-\contentsline {subsubsection}{Vantaggi e Svantaggi}{41}{section*.8}%
-\contentsline {paragraph}{Vantaggi}{41}{section*.9}%
-\contentsline {paragraph}{Svantaggi}{42}{section*.10}%
-\contentsline {subsubsection}{Limiti in contesti multivariati}{42}{section*.11}%
-\contentsline {subsection}{\numberline {5.2.3}Il Tau di Kendall}{43}{subsection.5.2.3}%
-\contentsline {subsubsection}{Principio di base}{43}{section*.12}%
-\contentsline {subsubsection}{Formula del Kendall’s Tau}{43}{section*.13}%
-\contentsline {paragraph}{Valori di \( \tau \):}{43}{section*.14}%
-\contentsline {subsubsection}{Differenza con il Coefficiente di Correlazione di Spearman}{44}{section*.15}%
-\contentsline {subsection}{\numberline {5.2.4}Esempio Numerico}{44}{subsection.5.2.4}%
-\contentsline {subsubsection}{Passaggi Principali}{44}{section*.16}%
-\contentsline {paragraph}{1. Definizione della Copula di Gumbel}{44}{section*.17}%
-\contentsline {paragraph}{2. Relazione con il Coefficiente di Kendall (\( \tau \))}{44}{section*.18}%
-\contentsline {subsubsection}{Esempio con Dati Simulati}{44}{section*.19}%
-\contentsline {paragraph}{1. Calcolo del Coefficiente di Kendall (\( \tau \))}{45}{section*.20}%
-\contentsline {paragraph}{2. Stima del parametro \( \theta \)}{45}{section*.21}%
-\contentsline {subsubsection}{Codice dax}{45}{section*.22}%
-\contentsline {subsection}{\numberline {5.2.5}Stima Bayesiana}{45}{subsection.5.2.5}%
-\contentsline {subsubsection}{Teorema di Bayes}{45}{section*.23}%
-\contentsline {subsubsection}{Vantaggi Generali della Stima Bayesiana}{46}{section*.24}%
-\contentsline {subsubsection}{Vantaggi Specifici nei Contesti con Copule}{47}{section*.25}%
-\contentsline {subsubsection}{Applicazioni Specifiche}{47}{section*.26}%
-\contentsline {subsubsection}{Python}{48}{section*.27}%
+\contentsline {subsection}{\numberline {5.2.2}Implementazione Python per una copula Student t:}{40}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Metodo dei Momenti}{42}{subsection.5.2.3}%
+\contentsline {subsubsection}{Applicazione alle copule}{42}{section*.5}%
+\contentsline {subsubsection}{Ambiti di Applicazione}{42}{section*.6}%
+\contentsline {subsubsection}{Vantaggi e Svantaggi}{43}{section*.7}%
+\contentsline {paragraph}{Vantaggi}{43}{section*.8}%
+\contentsline {paragraph}{Svantaggi}{43}{section*.9}%
+\contentsline {subsubsection}{Limiti in contesti multivariati}{43}{section*.10}%
+\contentsline {subsection}{\numberline {5.2.4}Il Tau di Kendall}{45}{subsection.5.2.4}%
+\contentsline {subsubsection}{Principio di base}{45}{section*.11}%
+\contentsline {subsubsection}{Formula del Kendall’s Tau}{45}{section*.12}%
+\contentsline {paragraph}{Valori di \( \tau \):}{45}{section*.13}%
+\contentsline {subsubsection}{Differenza con il Coefficiente di Correlazione di Spearman}{46}{section*.14}%
+\contentsline {subsection}{\numberline {5.2.5}Relazioni tra parametri delle copule e misure di dipendenza}{46}{subsection.5.2.5}%
+\contentsline {subsection}{\numberline {5.2.6}Codice Python metodo dei momenti}{47}{subsection.5.2.6}%
+\contentsline {subsubsection}{Applicazione alla copula Gumbel}{47}{section*.15}%
+\contentsline {subsubsection}{Applicazione alla copula Clayton}{49}{section*.16}%
+\contentsline {subsection}{\numberline {5.2.7}Stima Bayesiana}{50}{subsection.5.2.7}%
+\contentsline {subsubsection}{Teorema di Bayes}{50}{section*.17}%
+\contentsline {subsubsection}{Vantaggi Generali della Stima Bayesiana}{51}{section*.18}%
+\contentsline {subsubsection}{Vantaggi Specifici nei Contesti con Copule}{51}{section*.19}%
+\contentsline {subsubsection}{Applicazioni Specifiche}{52}{section*.20}%
+\contentsline {subsection}{\numberline {5.2.8}Metodo MCMC in Python}{52}{subsection.5.2.8}%
+\contentsline {subsubsection}{Implementazione in Python}{52}{section*.21}%
+\contentsline {section}{\numberline {5.3}Implementazione Pratica: Applicazione ai Dati del DAX}{57}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Preparazione dei dati}{57}{subsection.5.3.1}%
+\contentsline {subsubsection}{Parte 1: Diagnostica del file CSV}{57}{section*.22}%
+\contentsline {subsubsection}{Parte 2: Lettura e Correzione dei Dati}{59}{section*.26}%
+\contentsline {subsection}{\numberline {5.3.2}Stima dei Parametri per Diverse Copule}{62}{subsection.5.3.2}%

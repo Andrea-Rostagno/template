@@ -5,7 +5,6 @@
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-\bibstyle{plainnat}
 \babel@aux{italian}{}
 \babel@aux{italian}{}
 \babel@aux{italian}{}
@@ -44,21 +43,21 @@
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{toc}{\contentsline {section}{\numberline {4.1}Struttura e caratteristiche dei dati}{27}{section.4.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Inizio e fine del dataset}}{27}{figure.4.1}\protected@file@percent }
-\newlabel{fig:dataset}{{4.1}{27}{Inizio e fine del dataset}{figure.4.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces 616397 osservazioni raccolte di open, high, low and close }}{27}{table.4.1}\protected@file@percent }
+\newlabel{tab:dati_finanziari}{{4.1}{27}{616397 osservazioni raccolte di open, high, low and close}{table.4.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.2}Pulizia e preprocessing}{28}{section.4.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {4.3}Trasformazione dei dati}{29}{section.4.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Rendimenti logaritmici standardizzati}}{29}{figure.4.2}\protected@file@percent }
-\newlabel{fig:log_returns}{{4.2}{29}{Rendimenti logaritmici standardizzati}{figure.4.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Rendimenti logaritmici standardizzati}}{29}{table.4.2}\protected@file@percent }
+\newlabel{tab:dati_finanziari_modificati}{{4.2}{29}{Rendimenti logaritmici standardizzati}{table.4.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.4}Normalizzazione}{30}{section.4.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Dati uniformati all’intervallo [0,1]}}{30}{figure.4.3}\protected@file@percent }
-\newlabel{fig:uniform_data}{{4.3}{30}{Dati uniformati all’intervallo [0,1]}{figure.4.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Dati uniformati all'intervallo [0,1]}}{30}{table.4.3}\protected@file@percent }
+\newlabel{tab:dati_array}{{4.3}{30}{Dati uniformati all'intervallo [0,1]}{table.4.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.5}Assunzioni nei modelli di copula}{30}{section.4.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {4.6}Distribuzione dei rendimenti}{31}{section.4.6}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Distribuzione dei Rendimenti Logaritmici del DAX (Subset)}}{31}{figure.4.4}\protected@file@percent }
-\newlabel{fig:log_returns_distribution}{{4.4}{31}{Distribuzione dei Rendimenti Logaritmici del DAX (Subset)}{figure.4.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces Matrice di correlazione}}{31}{figure.4.5}\protected@file@percent }
-\newlabel{fig:correlation_matrix}{{4.5}{31}{Matrice di correlazione}{figure.4.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Distribuzione dei Rendimenti Logaritmici del DAX (Subset)}}{31}{figure.4.1}\protected@file@percent }
+\newlabel{fig:log_returns_distribution}{{4.1}{31}{Distribuzione dei Rendimenti Logaritmici del DAX (Subset)}{figure.4.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Matrice di correlazione tra Open, High, Low e Close}}{31}{table.4.4}\protected@file@percent }
+\newlabel{tab:matrice_correlazione}{{4.4}{31}{Matrice di correlazione tra Open, High, Low e Close}{table.4.4}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.7}Assunzioni generali}{32}{section.4.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.7.1}Conclusione sulle assunzioni}{33}{subsection.4.7.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {part}{\EnsureStandardFontEncoding {IV}\hspace  {1em}Stima dei Parametri delle Copule e Implementazione Pratica}{35}{part.4}\protected@file@percent }
@@ -69,34 +68,50 @@
 \@writefile{toc}{\contentsline {section}{\numberline {5.2}Metodi di stima dei parametri}{38}{section.5.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.2.1}Stima di Massima Verosimiglianza (MLE)}{38}{subsection.5.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{Vantaggi del MLE:}{39}{section*.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Limitazioni del MLE:}{40}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Limitazioni del MLE:}{39}{section*.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{Considerazioni finali}{40}{section*.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Implementazione Python:}{40}{section*.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.2}Metodo dei Momenti}{41}{subsection.5.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Applicazione alle copule}{41}{section*.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Ambiti di Applicazione}{41}{section*.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Vantaggi e Svantaggi}{41}{section*.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Vantaggi}{41}{section*.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Svantaggi}{42}{section*.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Limiti in contesti multivariati}{42}{section*.11}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.3}Il Tau di Kendall}{43}{subsection.5.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Principio di base}{43}{section*.12}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Formula del Kendall’s Tau}{43}{section*.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Valori di \( \tau \):}{43}{section*.14}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Differenza con il Coefficiente di Correlazione di Spearman}{44}{section*.15}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.4}Esempio Numerico}{44}{subsection.5.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Passaggi Principali}{44}{section*.16}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{1. Definizione della Copula di Gumbel}{44}{section*.17}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{2. Relazione con il Coefficiente di Kendall (\( \tau \))}{44}{section*.18}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Esempio con Dati Simulati}{44}{section*.19}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{1. Calcolo del Coefficiente di Kendall (\( \tau \))}{45}{section*.20}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{2. Stima del parametro \( \theta \)}{45}{section*.21}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Codice dax}{45}{section*.22}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.5}Stima Bayesiana}{45}{subsection.5.2.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Teorema di Bayes}{45}{section*.23}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Vantaggi Generali della Stima Bayesiana}{46}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.2}Implementazione Python per una copula Student t:}{40}{subsection.5.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.3}Metodo dei Momenti}{42}{subsection.5.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Applicazione alle copule}{42}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Ambiti di Applicazione}{42}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Vantaggi e Svantaggi}{43}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Vantaggi}{43}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Svantaggi}{43}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Limiti in contesti multivariati}{43}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.4}Il Tau di Kendall}{45}{subsection.5.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Principio di base}{45}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Formula del Kendall’s Tau}{45}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Valori di \( \tau \):}{45}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Differenza con il Coefficiente di Correlazione di Spearman}{46}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.5}Relazioni tra parametri delle copule e misure di dipendenza}{46}{subsection.5.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.6}Codice Python metodo dei momenti}{47}{subsection.5.2.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Applicazione alla copula Gumbel}{47}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Applicazione alla copula Clayton}{49}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.7}Stima Bayesiana}{50}{subsection.5.2.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Teorema di Bayes}{50}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Vantaggi Generali della Stima Bayesiana}{51}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Vantaggi Specifici nei Contesti con Copule}{51}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Applicazioni Specifiche}{52}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.8}Metodo MCMC in Python}{52}{subsection.5.2.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Implementazione in Python}{52}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Implementazione Pratica: Applicazione ai Dati del DAX}{57}{section.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.1}Preparazione dei dati}{57}{subsection.5.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Parte 1: Diagnostica del file CSV}{57}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Parte 2: Lettura e Correzione dei Dati}{59}{section*.26}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Statistiche descrittive delle colonne numeriche}}{61}{table.5.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5.2}{\ignorespaces Dati puliti dopo il preprocessing}}{61}{table.5.2}\protected@file@percent }
+\citation{*}
+\bibstyle{plainnat}
 \bibdata{references}
-\@writefile{toc}{\contentsline {subsubsection}{Vantaggi Specifici nei Contesti con Copule}{47}{section*.25}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Applicazioni Specifiche}{47}{section*.26}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Python}{48}{section*.27}\protected@file@percent }
-\gdef \@abspage@last{49}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Ultimi 100 valori di prezzo}}{62}{figure.5.1}\protected@file@percent }
+\newlabel{fig:price_chart}{{5.1}{62}{Ultimi 100 valori di prezzo}{figure.5.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.2}Stima dei Parametri per Diverse Copule}{62}{subsection.5.3.2}\protected@file@percent }
+\bibcite{cherubini2004}{{1}{2004}{{Cherubini et~al.}}{{Cherubini, Luciano, and Vecchiato}}}
+\bibcite{clayton1978}{{2}{1978}{{Clayton}}{{}}}
+\bibcite{demarta2005}{{3}{2005}{{Demarta and McNeil}}{{}}}
+\bibcite{frank1979}{{4}{1979}{{Frank}}{{}}}
+\bibcite{gumbel1960}{{5}{1960}{{Gumbel}}{{}}}
+\bibcite{joe2014}{{6}{2014}{{Joe}}{{}}}
+\bibcite{mcneil2015}{{7}{2015}{{McNeil et~al.}}{{McNeil, Frey, and Embrechts}}}
+\bibcite{nelsen2006}{{8}{2006}{{Nelsen}}{{}}}
+\gdef \@abspage@last{63}
